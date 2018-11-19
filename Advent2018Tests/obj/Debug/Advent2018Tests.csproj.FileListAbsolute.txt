@@ -1,0 +1,8 @@
+C:\Users\Meowth\Documents\GitHub\Advent2018\Advent2018Tests\bin\Debug\Advent2018Tests.dll
+C:\Users\Meowth\Documents\GitHub\Advent2018\Advent2018Tests\bin\Debug\Advent2018Tests.pdb
+C:\Users\Meowth\Documents\GitHub\Advent2018\Advent2018Tests\bin\Debug\Advent2018.exe
+C:\Users\Meowth\Documents\GitHub\Advent2018\Advent2018Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\Meowth\Documents\GitHub\Advent2018\Advent2018Tests\bin\Debug\Advent2018.pdb
+C:\Users\Meowth\Documents\GitHub\Advent2018\Advent2018Tests\obj\Debug\Advent2018Tests.csprojResolveAssemblyReference.cache
+C:\Users\Meowth\Documents\GitHub\Advent2018\Advent2018Tests\obj\Debug\Advent2018Tests.dll
+C:\Users\Meowth\Documents\GitHub\Advent2018\Advent2018Tests\obj\Debug\Advent2018Tests.pdb

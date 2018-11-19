@@ -7,9 +7,9 @@ using System.Text.RegularExpressions;
 
 namespace Advent2018
 {
-    public class Day01 : Day
+    public class Day05 : Day
     {
-        public Day01(string _input) : base(_input)
+        public Day05(string _input) : base(_input)
         {
 
         }

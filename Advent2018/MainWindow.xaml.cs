@@ -52,7 +52,10 @@ namespace Advent2018
             {
                 try
                 {
-                    ChoosenDay = Int32.Parse(DayBox.Text);
+                    int DayToChoose = 0;
+                    DayToChoose = Int32.Parse(DayBox.Text);
+                    if (DayToChoose > 0 && DayToChoose <= 25)
+                        ChoosenDay = DayToChoose;
                     DayBox.Text = ChoosenDay.ToString();
                 }
                 catch
@@ -69,6 +72,78 @@ namespace Advent2018
             {
                 case 1:
                     ReturnDay = new Day01(_input);
+                    break;
+                case 2:
+                    ReturnDay = new Day02(_input);
+                    break;
+                case 3:
+                    ReturnDay = new Day03(_input);
+                    break;
+                case 4:
+                    ReturnDay = new Day04(_input);
+                    break;
+                case 5:
+                    ReturnDay = new Day05(_input);
+                    break;
+                case 6:
+                    ReturnDay = new Day06(_input);
+                    break;
+                case 7:
+                    ReturnDay = new Day07(_input);
+                    break;
+                case 8:
+                    ReturnDay = new Day08(_input);
+                    break;
+                case 9:
+                    ReturnDay = new Day09(_input);
+                    break;
+                case 10:
+                    ReturnDay = new Day10(_input);
+                    break;
+                case 11:
+                    ReturnDay = new Day11(_input);
+                    break;
+                case 12:
+                    ReturnDay = new Day12(_input);
+                    break;
+                case 13:
+                    ReturnDay = new Day13(_input);
+                    break;
+                case 14:
+                    ReturnDay = new Day14(_input);
+                    break;
+                case 15:
+                    ReturnDay = new Day15(_input);
+                    break;
+                case 16:
+                    ReturnDay = new Day16(_input);
+                    break;
+                case 17:
+                    ReturnDay = new Day17(_input);
+                    break;
+                case 18:
+                    ReturnDay = new Day18(_input);
+                    break;
+                case 19:
+                    ReturnDay = new Day19(_input);
+                    break;
+                case 20:
+                    ReturnDay = new Day20(_input);
+                    break;
+                case 21:
+                    ReturnDay = new Day21(_input);
+                    break;
+                case 22:
+                    ReturnDay = new Day22(_input);
+                    break;
+                case 23:
+                    ReturnDay = new Day23(_input);
+                    break;
+                case 24:
+                    ReturnDay = new Day24(_input);
+                    break;
+                case 25:
+                    ReturnDay = new Day25(_input);
                     break;
                 default:
                     ReturnDay = new Day01(_input);
