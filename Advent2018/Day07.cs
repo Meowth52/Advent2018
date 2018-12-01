@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,14 @@ namespace Advent2018
             int Sum = 0;
             int Sum2 = 0;
             return Tuple.Create(Sum.ToString(), Sum2.ToString());
+        }
+        public override string getPartOne()
+        {
+            throw new NotImplementedException();
+        }
+        public override string getPartTwo()
+        {
+            throw new NotImplementedException();
         }
     }
 }

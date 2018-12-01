@@ -51,7 +51,31 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="DayTests.cs" />
+    <Compile Include="Day02Tests.cs" />
+    <Compile Include="Day01Tests.cs" />
+    <Compile Include="Day03Tests.cs" />
+    <Compile Include="Day04Tests.cs" />
+    <Compile Include="Day05Tests.cs" />
+    <Compile Include="Day06Tests.cs" />
+    <Compile Include="Day07Tests.cs" />
+    <Compile Include="Day08Tests.cs" />
+    <Compile Include="Day09Tests.cs" />
+    <Compile Include="Day10Tests.cs" />
+    <Compile Include="Day11Tests.cs" />
+    <Compile Include="Day12Tests.cs" />
+    <Compile Include="Day13Tests.cs" />
+    <Compile Include="Day14Tests.cs" />
+    <Compile Include="Day15Tests.cs" />
+    <Compile Include="Day16Tests.cs" />
+    <Compile Include="Day17Tests.cs" />
+    <Compile Include="Day18Tests.cs" />
+    <Compile Include="Day19Tests.cs" />
+    <Compile Include="Day20Tests.cs" />
+    <Compile Include="Day21Tests.cs" />
+    <Compile Include="Day22Tests.cs" />
+    <Compile Include="Day23Tests.cs" />
+    <Compile Include="Day24Tests.cs" />
+    <Compile Include="Day25Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

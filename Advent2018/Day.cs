@@ -18,6 +18,8 @@ namespace Advent2018
             this._mainView = mainView;
         }
         public abstract Tuple<string, string> getResult();
+        public abstract string getPartOne();
+        public abstract string getPartTwo();
         public string parseJustOneLine(string input)
         {
             return input.Replace("\r\n", "");
