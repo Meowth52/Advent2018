@@ -17,3 +17,14 @@ C:\Users\Anna\Documents\GitHub\Advent2018\Advent2018Tests\obj\Debug\Advent2018Te
 C:\Users\Anna\Documents\GitHub\Advent2018\Advent2018Tests\obj\Debug\Advent2018Tests.csproj.CopyComplete
 C:\Users\Anna\Documents\GitHub\Advent2018\Advent2018Tests\obj\Debug\Advent2018Tests.dll
 C:\Users\Anna\Documents\GitHub\Advent2018\Advent2018Tests\obj\Debug\Advent2018Tests.pdb
+C:\Users\A423102\Documents\GitHub\Advent2018\Advent2018Tests\bin\Debug\Advent2018Tests.dll
+C:\Users\A423102\Documents\GitHub\Advent2018\Advent2018Tests\bin\Debug\Advent2018Tests.pdb
+C:\Users\A423102\Documents\GitHub\Advent2018\Advent2018Tests\bin\Debug\Advent2018.exe
+C:\Users\A423102\Documents\GitHub\Advent2018\Advent2018Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\A423102\Documents\GitHub\Advent2018\Advent2018Tests\bin\Debug\Advent2018.pdb
+C:\Users\A423102\Documents\GitHub\Advent2018\Advent2018Tests\bin\Debug\Advent2018.exe.config
+C:\Users\A423102\Documents\GitHub\Advent2018\Advent2018Tests\obj\Debug\Advent2018Tests.csprojAssemblyReference.cache
+C:\Users\A423102\Documents\GitHub\Advent2018\Advent2018Tests\obj\Debug\Advent2018Tests.csproj.CoreCompileInputs.cache
+C:\Users\A423102\Documents\GitHub\Advent2018\Advent2018Tests\obj\Debug\Advent2018Tests.csproj.CopyComplete
+C:\Users\A423102\Documents\GitHub\Advent2018\Advent2018Tests\obj\Debug\Advent2018Tests.dll
+C:\Users\A423102\Documents\GitHub\Advent2018\Advent2018Tests\obj\Debug\Advent2018Tests.pdb
