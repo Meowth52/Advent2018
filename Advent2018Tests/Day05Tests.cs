@@ -14,9 +14,9 @@ namespace Advent2018.Tests
         [TestMethod()]
         public void Day05Test()
         {
-            Day _day05 = new Day05("");
-            string PartOneExpected = "Fail";
-            string PartTwoExpected = "Fail";
+            Day _day05 = new Day05("dabAcCaCBAcCcaDA");
+            string PartOneExpected = "10";
+            string PartTwoExpected = "4";
             Tuple<string, string> Actual = _day05.getResult();
             Assert.AreEqual(PartOneExpected, Actual.Item1);
             Assert.AreEqual(PartTwoExpected, Actual.Item2);
