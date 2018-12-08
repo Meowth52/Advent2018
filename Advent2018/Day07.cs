@@ -86,8 +86,8 @@ namespace Advent2018
         }
         public override string getPartTwo()
         {
-            int NumberOfWorkers = 2;
-            int ArbetaryTime = 0;
+            int NumberOfWorkers = 5;
+            int ArbetaryTime = 60;
             int Sum2 = 0;
             string Sleigh = "";
             Dictionary<char, int> Workers = new Dictionary<char, int>();
@@ -138,21 +138,28 @@ namespace Advent2018
                     {
                         if (Workers.Count < NumberOfWorkers)
                         {
-                            foreach(string s in RemoveIndex)
+                            if (RemoveIndex.Count == 0)
                             {
-                                if (!Workers.ContainsKey(s[0]))
+                                if (!Workers.ContainsKey(c))
                                 {
                                     Workers.Add(c, ArbetaryTime + (int)c - 64);
-                                    RemoveChar.Add(s[0]);
+                                    RemoveChar.Add(c);
                                 }
                             }
+                            foreach(string s in RemoveIndex)
+                                {
+                                    if (!Workers.ContainsKey(s[0]))
+                                    {
+                                        Workers.Add(c, ArbetaryTime + (int)c - 64);
+                                        RemoveChar.Add(s[0]);
+                                    }
+                                }
                         }
                         foreach (string s in RemoveIndex)
                         {
                             AssemblyInstructions.Remove(s);
                         }
                         RemoveIndex.Clear();
-                        break;
                     }
                     else
                     {
@@ -162,14 +169,14 @@ namespace Advent2018
                 foreach(char c in RemoveChar)
                     Steps.Remove(c);
                 List<char> WorkersDone = new List<char>();
+                for (int i = 0; i < Workers.Count; i++)
+                {
+                    Workers[Workers.ElementAt(i).Key]--;
+                }
                 foreach (KeyValuePair<char, int> Worker in Workers)
                 {
                     if (Worker.Value == 0)
                         WorkersDone.Add(Worker.Key);
-                }
-                for (int i = 0; i < Workers.Count; i++)
-                {
-                    Workers[Workers.ElementAt(i).Key]--;
                 }
                 foreach (char c in WorkersDone)
                 {

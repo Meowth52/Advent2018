@@ -16,7 +16,7 @@ namespace Advent2018.Tests
         {
             Day _day07 = new Day07("Step C must be finished before step A can begin.\r\nStep C must be finished before step F can begin.\r\nStep A must be finished before step B can begin.\r\nStep A must be finished before step D can begin.\r\nStep B must be finished before step E can begin.\r\nStep D must be finished before step E can begin.\r\nStep F must be finished before step E can begin.");
             string PartOneExpected = "CABDFE";
-            string PartTwoExpected = "15";
+            string PartTwoExpected = "253"; //not properly testable
             Tuple<string, string> Actual = _day07.getResult();
             Assert.AreEqual(PartOneExpected, Actual.Item1);
             Assert.AreEqual(PartTwoExpected, Actual.Item2);
