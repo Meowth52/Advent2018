@@ -98,7 +98,7 @@ namespace Advent2018
             {
                 foreach (int i in Entries)
                 {
-                    if (i < ChildrenNodes.Count && i>0)
+                    if (i <= ChildrenNodes.Count && i>0)
                         NodeValue += ChildrenNodes[i-1].getNodeValue();
                 }
             }
