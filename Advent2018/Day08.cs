@@ -11,7 +11,7 @@ namespace Advent2018
     {
         List<string[]> Instructions;
         List<int> SystemLicenceFile;
-        Dictionary<int,Scmenum> FullStack;
+        Dictionary<int,Node> FullStack;
         public Day08(string _input) : base(_input)
         {
             Instructions = this.parseListOfStringArrays(_input);
@@ -25,7 +25,7 @@ namespace Advent2018
                 Int32.TryParse(s, out TryParseInt);
                 SystemLicenceFile.Add(TryParseInt);
             }
-            FullStack = new Dictionary<int, Scmenum>();
+            FullStack = new Dictionary<int, Node>();
             string Sum = getPartOne();
             string Sum2 = getPartTwo();
             return Tuple.Create(Sum.ToString(), Sum2.ToString());
@@ -34,7 +34,7 @@ namespace Advent2018
         {
             int Sum = 0;
             int Index = 0;
-            List<Scmenum> Stack = new List<Scmenum>();
+            List<Node> Stack = new List<Node>();
             int SchmenumIndex = 0;
             while (Index < SystemLicenceFile.Count - 1)
             {
@@ -42,8 +42,8 @@ namespace Advent2018
                 {
                     if (Stack.Count > 0)
                         Stack.Last().Children--;
-                    Stack.Add(new Scmenum(SystemLicenceFile[Index], SystemLicenceFile[Index + 1],SchmenumIndex));
-                    FullStack.Add(SchmenumIndex,new Scmenum(SystemLicenceFile[Index], SystemLicenceFile[Index + 1],SchmenumIndex));
+                    Stack.Add(new Node(SystemLicenceFile[Index], SystemLicenceFile[Index + 1],SchmenumIndex));
+                    FullStack.Add(SchmenumIndex,new Node(SystemLicenceFile[Index], SystemLicenceFile[Index + 1],SchmenumIndex));
                     Index += 2;
                     SchmenumIndex++;                    
                 }
@@ -83,7 +83,7 @@ namespace Advent2018
                         {
                             foreach (int entry in FullStack[index].Entries)
                             {
-                                if(entry!=0)
+                                if(entry!=0 && entry<=FullStack[index].Children)
                                     NextIndex.Add(index+entry);
                             }
                         }
@@ -95,18 +95,20 @@ namespace Advent2018
             return Sum2.ToString();
         }
     }
-    public class Scmenum
+    public class Node
     {
         public int Index;
         public int Children;
         public int DataEntries;
         public List<int> Entries;
-        public Scmenum(int _children, int _dataEntries, int _index)
+        public List<int> ChildrenNodes;
+        public Node(int _children, int _dataEntries, int _index)
         {
             Children = _children;
             DataEntries = _dataEntries;
             Index = _index;
             Entries = new List<int>();
+            ChildrenNodes = new List<int>();
         }
 
     }
