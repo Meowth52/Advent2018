@@ -11,7 +11,7 @@ namespace Advent2018
     {
         List<string[]> Instructions;
         List<int> SystemLicenceFile;
-        Dictionary<int,Scmenum> FullStack;
+        Node FullStack;
         public Day08(string _input) : base(_input)
         {
             Instructions = this.parseListOfStringArrays(_input);
@@ -25,89 +25,84 @@ namespace Advent2018
                 Int32.TryParse(s, out TryParseInt);
                 SystemLicenceFile.Add(TryParseInt);
             }
-            FullStack = new Dictionary<int, Scmenum>();
+            FullStack = new Node(SystemLicenceFile);
             string Sum = getPartOne();
             string Sum2 = getPartTwo();
             return Tuple.Create(Sum.ToString(), Sum2.ToString());
         }
         public override string getPartOne()
         {
-            int Sum = 0;
-            int Index = 0;
-            List<Scmenum> Stack = new List<Scmenum>();
-            int SchmenumIndex = 0;
-            while (Index < SystemLicenceFile.Count - 1)
-            {
-                if (Stack.Count == 0 || Stack.Last().Children > 0)
-                {
-                    if (Stack.Count > 0)
-                        Stack.Last().Children--;
-                    Stack.Add(new Scmenum(SystemLicenceFile[Index], SystemLicenceFile[Index + 1],SchmenumIndex));
-                    FullStack.Add(SchmenumIndex,new Scmenum(SystemLicenceFile[Index], SystemLicenceFile[Index + 1],SchmenumIndex));
-                    Index += 2;
-                    SchmenumIndex++;                    
-                }
-                else
-                {
-                    for (int i = 0; i < Stack.Last().DataEntries; i++)
-                    {
-                        Sum += SystemLicenceFile[Index];
-                        FullStack[Stack[Stack.Count-1].Index].Entries.Add(SystemLicenceFile[Index]);
-                        Index++;
-                    }
-                    Stack.RemoveAt(Stack.Count - 1);
-                }
-            }
+            int Sum = FullStack.getEntrySum();
             return Sum.ToString();
         }
         public override string getPartTwo()
         {
-            int Sum2 = 0;
-            List<int> Index = new List<int>();
-            List<int> NextIndex = new List<int>();
-            Index.Add(0);
-            while (Index.Count > 0)
-            {
-                foreach (int index in Index)
-                {
-                    if (index < FullStack.Count)
-                    {
-                        if (FullStack[index].Children == 0)
-                        {
-                            foreach (int entry in FullStack[index].Entries)
-                            {
-                                Sum2 += entry;
-                            }
-                        }
-                        else
-                        {
-                            foreach (int entry in FullStack[index].Entries)
-                            {
-                                if(entry!=0)
-                                    NextIndex.Add(index+entry);
-                            }
-                        }
-                    }
-                }
-                Index = new List<int>(NextIndex);
-                NextIndex.Clear();
-            }
+            int Sum2 = FullStack.getNodeValue();
             return Sum2.ToString();
         }
     }
-    public class Scmenum
+    public class Node
     {
-        public int Index;
         public int Children;
         public int DataEntries;
         public List<int> Entries;
-        public Scmenum(int _children, int _dataEntries, int _index)
+        public List<Node> ChildrenNodes;
+        public List<int> SystemLicenceFile;
+        public Node(List<int> _SystemLicenceFile)
         {
-            Children = _children;
-            DataEntries = _dataEntries;
-            Index = _index;
+            SystemLicenceFile = _SystemLicenceFile;
+            Children = SystemLicenceFile[0];
+            DataEntries = SystemLicenceFile[1];
             Entries = new List<int>();
+            ChildrenNodes = new List<Node>();
+            SystemLicenceFile.RemoveRange(0, 2);
+            for (int i = 0; i < Children; i++)
+            {
+                ChildrenNodes.Add(new Node(SystemLicenceFile));
+                SystemLicenceFile = ChildrenNodes[i].getSystemLicenceFile();
+            }
+            for (int i = 0; i < DataEntries; i++)
+            {
+                Entries.Add(SystemLicenceFile[i]);
+            }
+            SystemLicenceFile.RemoveRange(0, DataEntries);
         }
-
+        public List<int> getSystemLicenceFile()
+        {
+            return SystemLicenceFile;
+        }
+        public int getEntrySum()
+        {
+            int EntrySum = 0;
+            foreach(int i in Entries)
+            {
+                EntrySum += i;
+            }
+            foreach(Node n in ChildrenNodes)
+            {
+                EntrySum += n.getEntrySum();
+            }
+            return EntrySum;
+        }
+        public int getNodeValue()
+        {
+            int NodeValue = 0;
+            if (Children == 0)
+            {
+                foreach (int i in Entries)
+                {
+                    NodeValue += i;
+                }
+            }
+            else
+            {
+                foreach (int i in Entries)
+                {
+                    if (i <= ChildrenNodes.Count && i>0)
+                        NodeValue += ChildrenNodes[i-1].getNodeValue();
+                }
+            }
+            return NodeValue;
+        }
     }
 }

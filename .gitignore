@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 Advent2018/.vs/Advent2018/v15/.suo
 Advent2018/.vs/Advent2018/v15/Server/sqlite3/storage.ide
 Advent2018/.vs/Advent2018/v15/Server/sqlite3/storage.ide-shm
@@ -15,3 +16,8 @@ Advent2018/obj/Debug/Advent2018_MarkupCompile.lref
 Advent2018/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 Advent2018Tests/obj/Debug/Advent2018Tests.csproj.CoreCompileInputs.cache
 Advent2018Tests/obj/Debug/Advent2018Tests.csprojAssemblyReference.cache
+=======
+Advent2018/.vs/Advent2018/v14/.suo
+Advent2018/obj/Debug/Advent2018_MarkupCompile.i.cache
+Advent2018/obj/Debug/Advent2018_MarkupCompile.i.lref
+>>>>>>> Day-08
