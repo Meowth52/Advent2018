@@ -39,6 +39,10 @@ namespace Advent2018
         {
             return (x >= 0 && y >= 0 && x <= x2 && y <= y2);
         }
+        public override string ToString()
+        {
+            return x.ToString() + "," + y.ToString();
+        }
         public override int GetHashCode()
         {
             int hCode = x ^ y;
