@@ -55,3 +55,6 @@ Advent2018Tests/obj/Debug/Advent2018Tests.csproj.CoreCompileInputs.cache
 Advent2018Tests/obj/Debug/Advent2018Tests.csprojAssemblyReference.cache
 Advent2018Tests/obj/Debug/Advent2018Tests.dll
 Advent2018Tests/obj/Debug/Advent2018Tests.pdb
+Advent2018/.vs/Advent2018/v15/.suo
+Advent2018/.vs/Advent2018/v15/Server/sqlite3/storage.ide-shm
+*.ide-wal
