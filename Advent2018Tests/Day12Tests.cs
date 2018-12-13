@@ -16,10 +16,9 @@ namespace Advent2018.Tests
         {
             Day _day12 = new Day12("initial state: #..#.#..##......###...###\r\n\r\n...## => #\r\n..#.. => #\r\n.#... => #\r\n.#.#. => #\r\n.#.## => #\r\n.##.. => #\r\n.#### => #\r\n#.#.# => #\r\n#.### => #\r\n##.#. => #\r\n##.## => #\r\n###.. => #\r\n###.# => #\r\n####. => #");
             string PartOneExpected = "325";
-            string PartTwoExpected = "0";
             Tuple<string, string> Actual = _day12.getResult();
             Assert.AreEqual(PartOneExpected, Actual.Item1);
-            Assert.AreEqual(PartTwoExpected, Actual.Item2);
+            // Part2 not testable
         }
     }
 }

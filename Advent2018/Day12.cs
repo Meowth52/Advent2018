@@ -16,8 +16,8 @@ namespace Advent2018
         }
         public override Tuple<string, string> getResult()
         {
-            ulong Sum = 0;
-            ulong Sum2 = 0;
+            int Sum = 0;
+            long Sum2 = 0;
             long NumberOfIterations = 200;
             StringBuilder TestString = new StringBuilder();
             Instructions[0] = Instructions[0].Replace("initial state: ", "");
@@ -35,6 +35,8 @@ namespace Advent2018
             int NrOfPlants = 0;
             int LastNrOfPlants = 0;
             int LastIteration = 0;
+            int LastI = 0;
+            int PointsPerStable = 0;
             foreach(string s in Instructions)
             {
                 if (s.Length == 10 && s[9]=='#')
@@ -66,6 +68,10 @@ namespace Advent2018
                     }
                 }
                 Pots = NextPots;
+                if (i == 20)
+                {
+                    Sum = getPoints(Pots, NumberOfIterations);
+                }
                 for (int i2 = 0; i2 < Pots.Length; i2++)
                 {
                     if (Pots[i2])
@@ -79,9 +85,15 @@ namespace Advent2018
                     NrOfSame = 0;
                 LastNrOfPlants = NrOfPlants;
                 NrOfPlants = 0;
+                if (NrOfSame == 4)
+                {
+                    PointsPerStable = getPoints(Pots, NumberOfIterations);
+                }
                 if (NrOfSame > 4)
                 {
-                    LastIteration = i;
+                    LastIteration = getPoints(Pots, NumberOfIterations);
+                    PointsPerStable = LastIteration - PointsPerStable;
+                    LastI = i;
                     break;
                 }
             }
@@ -89,10 +101,10 @@ namespace Advent2018
             {
                 if (Pots[i])
                 {
-                    Sum += ((ulong)i-(ulong)NumberOfIterations*2) + (5000000000-(ulong)LastIteration)*2;
+                    Sum2 = LastIteration + (50000000000-LastI)*PointsPerStable;
                 }
             }
-            return Tuple.Create(Sum.ToString(), TestString.ToString());
+            return Tuple.Create(Sum.ToString(), Sum2.ToString());
         }
         public override string getPartOne()
         {
@@ -101,6 +113,18 @@ namespace Advent2018
         public override string getPartTwo()
         {
             throw new NotImplementedException();
+        }
+        public int getPoints(bool[]  Pots, long NumberOfIterations)
+        {
+            int ReturnThis =0;
+            for (int i2 = 0; i2 < Pots.Length; i2++)
+            {
+                if (Pots[i2])
+                {
+                    ReturnThis += i2 - (int)NumberOfIterations * 2;
+                }
+            }
+            return ReturnThis;
         }
     }
 }
