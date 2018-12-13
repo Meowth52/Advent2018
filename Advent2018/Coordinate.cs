@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Advent2018
 {
-    public class Coordinate : IEquatable<Coordinate>
+    public class Coordinate : IEquatable<Coordinate> , IComparable<Coordinate>
     {
         public int x;
         public int y;
@@ -55,6 +55,14 @@ namespace Advent2018
         public bool Equals(Coordinate obj)
         {
             return obj != null && obj.x == x && obj.y == y;
+        }
+        public int CompareTo(Coordinate other)
+        {
+            if (this.x == other.x)
+            {
+                return this.y.CompareTo(other.y);
+            }
+            return this.x.CompareTo(other.x);
         }
     }
     class CoordinateEqualityComparer : IEqualityComparer<Coordinate>

@@ -26,7 +26,9 @@ namespace Advent2018
                 for(int y= 1; y <= 300; y++)
                 {
                     if (x == 122 && y == 79)
+#pragma warning disable CS0642 // Possible mistaken empty statement
                         ;
+#pragma warning restore CS0642 // Possible mistaken empty statement
                     int Number = ((x + 10) * y + SerialNumber) * (x + 10);
                     Number = Number % 1000;
                     Number = Number / 100;

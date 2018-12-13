@@ -58,3 +58,9 @@ Advent2018Tests/obj/Debug/Advent2018Tests.pdb
 Advent2018/.vs/Advent2018/v15/.suo
 Advent2018/.vs/Advent2018/v15/Server/sqlite3/storage.ide-shm
 *.ide-wal
+*.pdb
+*.dll
+*.dll
+*.cache
+*.exe
+Advent2018/.vs/Advent2018/v14/.suo
