@@ -9,7 +9,7 @@ namespace Advent2018
 {
     public abstract class Day
     {
-        private MainView _mainView;
+        public MainView _mainView;
         public Day(string _input)
         {
 

@@ -120,6 +120,7 @@ namespace Advent2018
                     break;
                 case 17:
                     ReturnDay = new Day17(_input);
+                    ReturnDay.SetMainView(_mainView);
                     break;
                 case 18:
                     ReturnDay = new Day18(_input);
