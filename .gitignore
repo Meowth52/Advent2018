@@ -69,3 +69,10 @@ Advent2018/.vs/Advent2018/v14/.suo
 Advent2018/.vs/Advent2018/v14/.suo
 *.exe
 *.exe
+*.pdb
+*.exe
+*.ide-shm
+*.ide
+*.ide-wal
+*.lref
+*.dll

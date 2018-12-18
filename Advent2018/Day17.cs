@@ -22,6 +22,7 @@ namespace Advent2018
             int Sum2 = 0;
             int LargeNumber = 0;
             int LargestNumber = 0;
+            int SmallestNumber = 100;
             foreach (List<int> l in InstructionsValues)
             {
                 foreach (int i in l)
@@ -47,6 +48,8 @@ namespace Advent2018
                         TheGrid[InstructionsValues[i][0], i2] = '#';
                         if (i2 > LargestNumber)
                             LargestNumber = i2;
+                        if (i2 < SmallestNumber)
+                            SmallestNumber = i2;
                     }
                 }
                 else
@@ -56,6 +59,8 @@ namespace Advent2018
                         TheGrid[i2, InstructionsValues[i][0]] = '#';
                         if (InstructionsValues[i][0] > LargestNumber)
                             LargestNumber = InstructionsValues[i][0];
+                        if (InstructionsValues[i][0] < SmallestNumber)
+                            SmallestNumber = InstructionsValues[i][0];
                     }
                 }
             }
@@ -177,11 +182,16 @@ namespace Advent2018
                 //}
                 //_mainView.OutText = TestOutput.ToString();
             }
-            Sum = Water.Count();
+            Sum = Water.Count()-(SmallestNumber-1);
+            foreach(KeyValuePair<Coordinate,bool> w in Water)
+            {
+                if (!w.Value)
+                    Sum2++;
+            }
             TestOutput = new StringBuilder();
             for (int y = 0; y <= LargestNumber; y++)
             {
-                for (int x = 450; x < 550; x++)
+                for (int x = 400; x < 600; x++)
                 {
                     TestOutput.Append(TheGrid[x, y]);
                 }
