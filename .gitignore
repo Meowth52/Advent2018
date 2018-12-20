@@ -76,3 +76,6 @@ Advent2018/.vs/Advent2018/v14/.suo
 *.ide-wal
 *.lref
 *.dll
+*.exe
+*.pdb
+Advent2018/.vs/Advent2018/v14/.suo
