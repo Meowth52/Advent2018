@@ -18,8 +18,8 @@ namespace Advent2018
         {
             int Sum = 0;
             int Sum2 = 0;
-            int InstructionPointer = 0;
-            Int32.TryParse(Instructions[0][1], out InstructionPointer);
+            int InstructionPointerPointer = 0;
+            Int32.TryParse(Instructions[0][1], out InstructionPointerPointer);
             List<Instruction> ProperInstructions = new List<Instruction>();
             foreach(string[] s in Instructions)
             {
@@ -27,9 +27,10 @@ namespace Advent2018
                     ProperInstructions.Add(new Instruction(s));
             }
             int[] Registers = new int[6] {0,0,0,0,0,0};
-            int PointyMcPointFace = Registers[InstructionPointer];
-            while (PointyMcPointFace > 0 && PointyMcPointFace < ProperInstructions.Count)
+            int PointyMcPointFace = Registers[InstructionPointerPointer];
+            while (PointyMcPointFace >= 0 && PointyMcPointFace < ProperInstructions.Count)
             {
+                Registers[InstructionPointerPointer] = PointyMcPointFace;
                 string SwitchString = ProperInstructions[PointyMcPointFace].Operation;
                 int A = ProperInstructions[PointyMcPointFace].A;
                 int B = ProperInstructions[PointyMcPointFace].B;
@@ -43,10 +44,10 @@ namespace Advent2018
                         Registers[C]= Registers[A] + B;
                         break;
                     case "mulr":
-                        ;
+                        Registers[C] = Registers[A] * Registers[B];
                         break;
                     case "muli":
-                        ;
+                        Registers[C] = Registers[A] * B;
                         break;
                     case "banr":
                         ;
@@ -61,34 +62,54 @@ namespace Advent2018
                         ;
                         break;
                     case "setr":
-                        ;
+                        Registers[C]= Registers[A];
                         break;
                     case "seti":
-                        ;
+                        Registers[C] = A;
                         break;
                     case "gtir":
-                        ;
+                        if (A > Registers[B])
+                            Registers[C] = 1;
+                        else
+                            Registers[C] = 0;
                         break;
                     case "gtri":
-                        ;
+                        if (Registers[A] > B)
+                            Registers[C] = 1;
+                        else
+                            Registers[C] = 0;
                         break;
                     case "gtrr":
-                        ;
+                        if (Registers[A] > Registers[B])
+                            Registers[C] = 1;
+                        else
+                            Registers[C] = 0;
                         break;
                     case "eqir":
-                        ;
+                        if (A == Registers[B])
+                            Registers[C] = 1;
+                        else
+                            Registers[C] = 0;
                         break;
                     case "eqri":
-                        ;
+                        if (Registers[A] == B)
+                            Registers[C] = 1;
+                        else
+                            Registers[C] = 0;
                         break;
                     case "eqrr":
-                        ;
+                        if (Registers[A] == Registers[B])
+                            Registers[C] = 1;
+                        else
+                            Registers[C] = 0;
                         break;
                     default:
-                        break;
+                        break;                    
                 }
+                PointyMcPointFace = Registers[InstructionPointerPointer];
+                PointyMcPointFace++;
             }
-
+            Sum = Registers[0];
             return Tuple.Create(Sum.ToString(), Sum2.ToString());
         }
         public override string getPartOne()
