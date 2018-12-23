@@ -53,14 +53,27 @@ namespace Advent2018
                 }
             }
             MostestNumber = 0;
-            int TN = 50;
-            for(int x = MostestBot.x-TN;x<MostestBot.x+TN;x++)
-                for (int y = MostestBot.y - TN; y < MostestBot.y + TN; x++)
-                    for (int z = MostestBot.z - TN; z < MostestBot.z + TN; x++)
+            int TN = 100;
+            List<NanoBot> ShorterList = new List<NanoBot>();
+            foreach (NanoBot n in NanoBots)
+            {
+                NanoBot IncreasedRangeNanoBot = new NanoBot(0,0,n);
+                IncreasedRangeNanoBot.Range += TN;
+                if (IncreasedRangeNanoBot.isInRange(MostestBot))
+                {
+                    ShorterList.Add(n);
+                }
+            }
+            NanoBot TestBot = new NanoBot(0, 0, 0, 0);
+            for (int x = MostestBot.x-TN;x<MostestBot.x+TN;x++)
+                for (int y = MostestBot.y - TN; y < MostestBot.y + TN; y++)
+                    for (int z = MostestBot.z - TN; z < MostestBot.z + TN; z++)
                     {
-                        NanoBot TestBot = new NanoBot(x, y, z, 0);
+                        TestBot.x = x;
+                        TestBot.y = y;
+                        TestBot.z = z;
                         int Number = 0;
-                        foreach(NanoBot n in NanoBots)
+                        foreach(NanoBot n in ShorterList)
                         {
                             if (n.isInRange(TestBot))
                             {
@@ -92,6 +105,13 @@ namespace Advent2018
         {
             this.z = z;
             Range = _range;
+        }
+        public NanoBot(int x, int y, NanoBot n) : base(x,y)
+        {
+            this.x = n.x;
+            this.y = n.y;
+            this.z = n.z;
+            this.Range = n.Range;
         }
         public bool isInRange(NanoBot n)
         {
