@@ -100,3 +100,7 @@ Advent2018/.vs/Advent2018/v15/.suo
 *.cache
 *.dll
 *.pdb
+*.ide
+*.ide-shm
+*.ide-wal
+Advent2018/.vs/Advent2018/v15/.suo

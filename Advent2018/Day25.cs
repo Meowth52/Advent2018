@@ -9,9 +9,10 @@ namespace Advent2018
 {
     public class Day25 : Day
     {
+        List<List<int>> Instructions;
         public Day25(string _input) : base(_input)
         {
-
+            Instructions = this.parseListOfIntegerLists(_input);
         }
         public override Tuple<string, string> getResult()
         {
@@ -26,6 +27,16 @@ namespace Advent2018
         public override string getPartTwo()
         {
             throw new NotImplementedException();
+        }
+    }
+    public class Coordinate4D : Coordinate
+    {
+        public int z;
+        public int t;
+        public Coordinate4D (int x, int y, int z, int t) : base(x, y)
+        {
+            this.z = z;
+            this.t = t;
         }
     }
 }
