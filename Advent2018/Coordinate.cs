@@ -20,6 +20,10 @@ namespace Advent2018
             x = c.x;
             y = c.y;
         }
+        public Coordinate()
+        {
+
+        }
         public bool IsOn(Coordinate c)
         {
             return (c.x == this.x && c.y == this.y);
