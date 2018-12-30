@@ -24,6 +24,11 @@ namespace Advent2018
             {
                 Coordinates.Add(new Coordinate4D(l[0], l[1], l[2], l[3]));
             }
+            Dictionary<Coordinate4D, Dictionary<Coordinate4D, int>> Distances = new Dictionary<Coordinate4D, Dictionary<Coordinate4D, int>>();
+            foreach(Coordinate4D c in Coordinates)
+            {
+                Distances.Add(c, c.FillManhattan(Coordinates));
+            }
             while (Coordinates.Count > 0)
             {
                 List<Coordinate4D> Current = new List<Coordinate4D>();
@@ -40,7 +45,7 @@ namespace Advent2018
                             JoinUs = false;
                             foreach (Coordinate4D coo in Current)
                             {
-                                if (c.GetManhattan(coo) <= 3 & !Current.Contains(c))
+                                if (c.GetManhattan(coo, ref Distances) <= 3 & !Current.Contains(c))
                                 {
                                     JoinUs = true;
                                     break;
@@ -94,9 +99,22 @@ namespace Advent2018
             z = c.z;
             t = c.t;
         }
-        public int GetManhattan(Coordinate4D c)
+        public Dictionary<Coordinate4D,int> FillManhattan(List<Coordinate4D> cl)
+        {
+            Dictionary<Coordinate4D, int> ReturnDic = new Dictionary<Coordinate4D, int>();
+            foreach(Coordinate4D c in cl)
+            {
+                ReturnDic.Add(c, MakeManhattan(c));
+            }
+            return ReturnDic;
+        }
+        public int MakeManhattan(Coordinate4D c)
         {
             return Math.Abs(x - c.x) + Math.Abs(y - c.y) + Math.Abs(z - c.z) + Math.Abs(t - c.t);
+        }
+        public int GetManhattan(Coordinate4D c, ref Dictionary<Coordinate4D, Dictionary<Coordinate4D, int>> Distances)
+        {
+            return Distances[this][c];
         }
         public override string ToString()
         {
