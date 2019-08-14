@@ -17,7 +17,7 @@ namespace Advent2018
 {
     public partial class MainWindow : Window
     {
-        int LastDay = 21;
+        int LastDay = 15;
         public int ChoosenDay;
         private readonly MainView _mainView;
         public MainWindow()
