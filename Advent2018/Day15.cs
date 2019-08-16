@@ -17,7 +17,7 @@ namespace Advent2018
         public Day15(string _input) : base(_input)
         {
             Instructions = this.parseStringArray(_input);
-            Map = new string[Instructions.Length,Instructions[0].Length];
+            Map = new string[Instructions.Length, Instructions[0].Length];
             int x = 0;
             int y = 0;
             foreach (string s in Instructions)
@@ -25,19 +25,19 @@ namespace Advent2018
                 foreach (char c in s)
                 {
                     Map[x, y] = c.ToString();
-                    y += 1;
+                    x += 1;
                 }
-                y = 0;
-                x += 1;
+                x = 0;
+                y += 1;
             }
             grid = new Grid(Map.GetLength(0), Map.GetLength(1), 1.0f);
             Fighters = new Dictionary<string, Fighter>[2];
             Fighters[0] = new Dictionary<string, Fighter>();
             Fighters[1] = new Dictionary<string, Fighter>();
             int DictionaryIndex = 0;
-            for(x = 0; x < Map.GetLength(0); x++)
+            for (y = 0; y < Map.GetLength(1); y++)
             {
-                for (y = 0; y < Map.GetLength(1); y++)
+                for (x = 0; x < Map.GetLength(0); x++)
                 {
                     if (Map[x, y] != ".")
                     {
@@ -68,37 +68,47 @@ namespace Advent2018
         }
         public override string getPartOne()
         {
+            string Test = "";
             int Rounds = 0;
             while (Fighters[0].Count > 0 && Fighters[1].Count > 0)
             {
+                string TestOutput = "";
                 Rounds++;
                 List<string> MovedPieces = new List<string>();
                 for (int x = 0; x < Map.GetLength(0); x++)
                 {
-                    for (int y = 0; y < Map.GetLength(0); y++)
+                    for (int y = 0; y < Map.GetLength(1); y++)
                     {
                         if (!MovedPieces.Contains(Map[x, y]))
                         {
                             if (Map[x, y][0] == 'E')
                             {
-                                Act(0, x, y);
                                 MovedPieces.Add(Map[x, y]);
+                                Act(0, x, y);
                             }
                             else if (Map[x, y][0] == 'G')
                             {
-                                Act(1, x, y);
                                 MovedPieces.Add(Map[x, y]);
+                                Act(1, x, y);
                             }
                         }
                     }
                 }
-
+                for (int y = 0; y < Map.GetLength(1); y++)
+                {
+                    for (int x = 0; x < Map.GetLength(0); x++)
+                    {
+                        TestOutput += Map[x, y][0].ToString();
+                    }
+                    TestOutput += "\n";
+                }
+                Test = TestOutput;
             }
             int WinningTeam = 0;
             if (Fighters[0].Count == 0)
                 WinningTeam = 1;
             int RemainingHp = 0;
-            foreach(KeyValuePair<string, Fighter> winner in Fighters[WinningTeam])
+            foreach (KeyValuePair<string, Fighter> winner in Fighters[WinningTeam])
             {
                 RemainingHp += winner.Value.Hp;
             }
@@ -127,7 +137,7 @@ namespace Advent2018
             if (Enemies.Count >= 1)
             {
                 //Fight
-                Enemies.OrderBy(s => s.Value.Hp).ThenBy(s => s.Value.LocalPosition.x).ThenBy(s => s.Value.LocalPosition.y);
+                Enemies.OrderBy(s => s.Value.Hp).ThenBy(s => s.Value.LocalPosition.y).ThenBy(s => s.Value.LocalPosition.x);
                 if (!Fighters[EnemyType][Enemies.First().Key].TakeHit(CurrentFighter.AttackPower)) //if the target doesnt survive
                 {
                     Coordinate RemoveThis = new Coordinate(Fighters[EnemyType][Enemies.First().Key].LocalPosition.x, Fighters[EnemyType][Enemies.First().Key].LocalPosition.y);
@@ -143,7 +153,7 @@ namespace Advent2018
                 {
                     //to what position do we want to walk
                     List<Coordinate> EnemyPositions = new List<Coordinate>();
-                    foreach (KeyValuePair<string, Fighter> target in Fighters[(FighterType+1)%2])
+                    foreach (KeyValuePair<string, Fighter> target in Fighters[(FighterType + 1) % 2])
                     {
                         EnemyPositions.Add(new Coordinate(target.Value.LocalPosition.x, target.Value.LocalPosition.y));
                     }
@@ -160,6 +170,27 @@ namespace Advent2018
                 {
                     //Fuck it
                 }
+                Enemies.Clear();
+                Neighbours = CurrentFighter.GetAllNeighbours(Map);
+                foreach (Coordinate neighbour in Neighbours)
+                {
+                    if (Map[neighbour.x, neighbour.y][0] == EnemyLetter) //find neighbour enemy
+                    {
+                        Enemies.Add(Map[neighbour.x, neighbour.y], Fighters[EnemyType][Map[neighbour.x, neighbour.y]]);
+                    }
+                }
+                if (Enemies.Count >= 1)
+                {
+                    //Fight
+                    Enemies.OrderBy(s => s.Value.Hp).ThenBy(s => s.Value.LocalPosition.y).ThenBy(s => s.Value.LocalPosition.x);
+                    if (!Fighters[EnemyType][Enemies.First().Key].TakeHit(CurrentFighter.AttackPower)) //if the target doesnt survive
+                    {
+                        Coordinate RemoveThis = new Coordinate(Fighters[EnemyType][Enemies.First().Key].LocalPosition.x, Fighters[EnemyType][Enemies.First().Key].LocalPosition.y);
+                        Map[RemoveThis.x, RemoveThis.y] = ".";
+                        grid.UnblockCell(new Position(RemoveThis.x, RemoveThis.y));
+                        Fighters[EnemyType].Remove(Enemies.First().Key); //Arghh!!
+                    }
+                }
             }
 
         }
@@ -170,7 +201,7 @@ namespace Advent2018
             Map[from.x, from.y] = ".";
             Fighters[fighterType][Current].LocalPosition = to;
             grid.BlockCell(new Position(to.x, to.y));
-            grid.UnblockCell(new Position(from.x,from.y));
+            grid.UnblockCell(new Position(from.x, from.y));
         }
     }
     public class Fighter
@@ -197,13 +228,13 @@ namespace Advent2018
                 grid.UnblockCell(new Position(LocalPosition.x, LocalPosition.y));
                 grid.UnblockCell(new Position(target.x, target.y));
                 Position[] _path = grid.GetPath(new Position(LocalPosition.x, LocalPosition.y), new Position(target.x, target.y), MovementPatterns.LateralOnly);
-                if (_path.Length >0)
+                if (_path.Length > 0)
                     Resultset.Add(_path);
                 grid.BlockCell(new Position(LocalPosition.x, LocalPosition.y));
                 grid.BlockCell(new Position(target.x, target.y));
                 ;
             }
-            Resultset.Sort((x, y) => x.Length.CompareTo(y.Length));
+            Resultset.OrderBy(s => s.Length).ThenBy(s => s.Last().Y).ThenBy(s => s.Last().X);
             if (Resultset.Count == 0)
                 return new Coordinate(-1, -1);
             return new Coordinate(Resultset[0].Last().X, Resultset[0].Last().Y);
@@ -234,7 +265,7 @@ namespace Advent2018
                     GoodAlternatives.Add(new Coordinate(p[0].X, p[0].Y));
                 }
             }
-            GoodAlternatives.OrderBy(s => s.x).ThenBy(s => s.y);
+            GoodAlternatives.OrderBy(s => s.y).ThenBy(s => s.x);
             return GoodAlternatives[0];
         }
         public bool HasFreeNeighbours(string[,] map)
@@ -252,7 +283,7 @@ namespace Advent2018
             foreach (Coordinate d in directions)
             {
                 Coordinate neighbour = LocalPosition.GetSum(d);
-                if (neighbour.IsInPositiveBounds(map.GetLength(0),map.GetLength(1)))
+                if (neighbour.IsInPositiveBounds(map.GetLength(0), map.GetLength(1)))
                     returnList.Add(neighbour);
             }
             return returnList;
@@ -261,7 +292,7 @@ namespace Advent2018
         {
             List<Coordinate> returnList = new List<Coordinate>();
             List<Coordinate> Neighbours = this.GetAllNeighbours(map);
-            foreach(Coordinate neighbour in Neighbours)
+            foreach (Coordinate neighbour in Neighbours)
             {
                 if (map[neighbour.x, neighbour.y] == ".")
                     returnList.Add(neighbour);
