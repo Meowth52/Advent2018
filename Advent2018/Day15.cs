@@ -112,24 +112,27 @@ namespace Advent2018
         {
             Fighter CurrentFighter = Fighters[FighterType][Map[x, y]];
             List<Coordinate> Neighbours = CurrentFighter.GetAllNeighbours(Map);
-            Dictionary<string, Coordinate> Enemies = new Dictionary<string, Coordinate>();
+            Dictionary<string, Fighter> Enemies = new Dictionary<string, Fighter>();
             char EnemyLetter = 'G';
             if (FighterType == 1)
                 EnemyLetter = 'E';
+            int EnemyType = (FighterType + 1) % 2;
             foreach (Coordinate neighbour in Neighbours)
             {
                 if (Map[neighbour.x, neighbour.y][0] == EnemyLetter) //find neighbour enemy
                 {
-                    Enemies.Add(Map[neighbour.x, neighbour.y], new Coordinate(x,y));
+                    Enemies.Add(Map[neighbour.x, neighbour.y], Fighters[EnemyType][Map[neighbour.x, neighbour.y]]);
                 }
             }
             if (Enemies.Count >= 1)
             {
                 //Fight
-                Enemies.OrderBy(s => s.Value.x).ThenBy(s => s.Value.y);
-                int EnemyType = (FighterType+1)%2;
+                Enemies.OrderBy(s => s.Value.Hp).ThenBy(s => s.Value.LocalPosition.x).ThenBy(s => s.Value.LocalPosition.y);
                 if (!Fighters[EnemyType][Enemies.First().Key].TakeHit(CurrentFighter.AttackPower)) //if the target doesnt survive
                 {
+                    Coordinate RemoveThis = new Coordinate(Fighters[EnemyType][Enemies.First().Key].LocalPosition.x, Fighters[EnemyType][Enemies.First().Key].LocalPosition.y);
+                    Map[RemoveThis.x, RemoveThis.y] = ".";
+                    grid.UnblockCell(new Position(RemoveThis.x, RemoveThis.y));
                     Fighters[EnemyType].Remove(Enemies.First().Key); //Arghh!!
                 }
             }
@@ -145,11 +148,13 @@ namespace Advent2018
                         EnemyPositions.Add(new Coordinate(target.Value.LocalPosition.x, target.Value.LocalPosition.y));
                     }
                     Coordinate ClosestTarget = CurrentFighter.GetClosestTarget(EnemyPositions, grid);
-                    //what square is next
-                    Coordinate NextSquare = CurrentFighter.GetNextSquare(ClosestTarget, grid, Map);
-                    //walk
-                    UpdatePosition(CurrentFighter.LocalPosition, NextSquare, FighterType);
-
+                    if (!(ClosestTarget.x == -1))
+                    {
+                        //what square is next
+                        Coordinate NextSquare = CurrentFighter.GetNextSquare(ClosestTarget, grid, Map);
+                        //walk
+                        UpdatePosition(CurrentFighter.LocalPosition, NextSquare, FighterType);
+                    }
                 }
                 else
                 {
@@ -189,13 +194,18 @@ namespace Advent2018
             List<Position[]> Resultset = new List<Position[]>();
             foreach (Coordinate target in targets)
             {
-                Position _local = new Position(LocalPosition.x, LocalPosition.y);
-                Position _target = new Position(target.x, target.y);
-                Position[] _path = grid.GetPath(new Position(LocalPosition.x, LocalPosition.y), new Position(target.x, target.y));
-                Resultset.Add(grid.GetPath(new Position(LocalPosition.x, LocalPosition.y), new Position(target.x, target.y)));
+                grid.UnblockCell(new Position(LocalPosition.x, LocalPosition.y));
+                grid.UnblockCell(new Position(target.x, target.y));
+                Position[] _path = grid.GetPath(new Position(LocalPosition.x, LocalPosition.y), new Position(target.x, target.y), MovementPatterns.LateralOnly);
+                if (_path.Length >0)
+                    Resultset.Add(_path);
+                grid.BlockCell(new Position(LocalPosition.x, LocalPosition.y));
+                grid.BlockCell(new Position(target.x, target.y));
                 ;
             }
             Resultset.Sort((x, y) => x.Length.CompareTo(y.Length));
+            if (Resultset.Count == 0)
+                return new Coordinate(-1, -1);
             return new Coordinate(Resultset[0].Last().X, Resultset[0].Last().Y);
         }
         public Coordinate GetNextSquare(Coordinate target, Grid grid, string[,] map)
@@ -206,18 +216,22 @@ namespace Advent2018
             int BestestDistance = 1000000;
             foreach (Coordinate alternative in Alternatives)
             {
-                Position[] Path = grid.GetPath(new Position(alternative.x, alternative.y), new Position(target.x, target.y));
+                grid.UnblockCell(new Position(LocalPosition.x, LocalPosition.y));
+                grid.UnblockCell(new Position(target.x, target.y));
+                Position[] Path = grid.GetPath(new Position(alternative.x, alternative.y), new Position(target.x, target.y), MovementPatterns.LateralOnly);
                 if (Path.Length < BestestDistance)
                 {
                     BestestDistance = Path.Length;
                 }
                 Paths.Add(Path);
+                grid.BlockCell(new Position(LocalPosition.x, LocalPosition.y));
+                grid.BlockCell(new Position(target.x, target.y));
             }
             foreach (Position[] p in Paths)
             {
-                if (p.Length == BestestDistance)
+                if (p.Length == BestestDistance && p.Length > 0)
                 {
-                    GoodAlternatives.Add(new Coordinate(p[1].X, p[1].Y));
+                    GoodAlternatives.Add(new Coordinate(p[0].X, p[0].Y));
                 }
             }
             GoodAlternatives.OrderBy(s => s.x).ThenBy(s => s.y);
