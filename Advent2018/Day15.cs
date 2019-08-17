@@ -72,12 +72,25 @@ namespace Advent2018
             int Rounds = 0;
             while (Fighters[0].Count > 0 && Fighters[1].Count > 0)
             {
-                string TestOutput = "";
                 Rounds++;
-                List<string> MovedPieces = new List<string>();
-                for (int x = 0; x < Map.GetLength(0); x++)
+                string TestOutput = "";
+                Coordinate LastFucker = new Coordinate(0,0);
+                for (int y = Map.GetLength(1)-1; y >= 0; y--)
                 {
-                    for (int y = 0; y < Map.GetLength(1); y++)
+                    for (int x = Map.GetLength(0)-1; x >= 0; x--)
+                    {
+                        if (Map[x, y][0] == 'E' || Map[x, y][0] == 'G')
+                        {
+                            LastFucker = new Coordinate(x, y);
+                            goto Found;
+                        }
+                    }
+                }
+                Found:
+                List<string> MovedPieces = new List<string>();
+                for (int y = 0; y < Map.GetLength(1); y++)
+                {
+                    for (int x = 0; x < Map.GetLength(0); x++)
                     {
                         if (!MovedPieces.Contains(Map[x, y]))
                         {
@@ -91,6 +104,15 @@ namespace Advent2018
                                 MovedPieces.Add(Map[x, y]);
                                 Act(1, x, y);
                             }
+                            if (!LastFucker.IsOn(new Coordinate(x, y)) && (Fighters[0].Count == 0 || Fighters[1].Count == 0))
+                            {
+                                Rounds--;
+                                goto GetOut;
+                            }
+                            if (LastFucker.IsOn(new Coordinate(x, y)) && (Fighters[0].Count == 0 || Fighters[1].Count == 0))
+                            {
+                                goto GetOut;
+                            }
                         }
                     }
                 }                
@@ -102,9 +124,10 @@ namespace Advent2018
                     }                    
                     TestOutput += "\n";
                 }
-                //Console.Write(TestOutput);
+                //Console.Write("Round " + Rounds.ToString() + "\n" + TestOutput + "\n");
                 Test = TestOutput;
             }
+            GetOut:
             int WinningTeam = 0;
             if (Fighters[0].Count == 0)
                 WinningTeam = 1;
@@ -194,7 +217,6 @@ namespace Advent2018
                     //Fuck it
                 }
             }
-
         }
         public void UpdatePosition(Coordinate from, Coordinate to, int fighterType)
         {
@@ -228,12 +250,10 @@ namespace Advent2018
             foreach (Coordinate target in targets)
             {
                 grid.UnblockCell(new Position(LocalPosition.x, LocalPosition.y));
-                grid.UnblockCell(new Position(target.x, target.y));
                 Position[] _path = grid.GetPath(new Position(LocalPosition.x, LocalPosition.y), new Position(target.x, target.y), MovementPatterns.LateralOnly);
                 if (_path.Length > 0)
                     Resultset.Add(_path);
                 grid.BlockCell(new Position(LocalPosition.x, LocalPosition.y));
-                grid.BlockCell(new Position(target.x, target.y));
                 ;
             }
             if (Resultset.Count == 0)
@@ -250,7 +270,6 @@ namespace Advent2018
             foreach (Coordinate alternative in Alternatives)
             {
                 grid.UnblockCell(new Position(LocalPosition.x, LocalPosition.y));
-                grid.UnblockCell(new Position(target.x, target.y));
                 Position[] Path = grid.GetPath(new Position(alternative.x, alternative.y), new Position(target.x, target.y), MovementPatterns.LateralOnly);
                 if (Path.Length < BestestDistance)
                 {
@@ -258,7 +277,6 @@ namespace Advent2018
                 }
                 Paths.Add(Path);
                 grid.BlockCell(new Position(LocalPosition.x, LocalPosition.y));
-                grid.BlockCell(new Position(target.x, target.y));
             }
             foreach (Position[] p in Paths)
             {
@@ -304,16 +322,3 @@ namespace Advent2018
 
     }
 }
-//using RoyT.AStar;
-
-//// Create a new grid and let each cell have a default traversal cost of 1.0
-//var grid = new Grid(100, 100, 1.0f);
-
-//// Block some cells (for example walls)
-//grid.BlockCell(new Position(5, 5))
-
-//// Make other cells harder to traverse (for example water)
-//grid.SetCellCost(new Position(6, 5), 3.0f);
-
-//// And finally start the search for the shortest path form start to end
-//Position[] path = grid.GetPath(new Position(0, 0), new Position(99, 99));
