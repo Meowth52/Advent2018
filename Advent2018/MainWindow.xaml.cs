@@ -114,6 +114,7 @@ namespace Advent2018
                     break;
                 case 15:
                     ReturnDay = new Day15(_input);
+                    ReturnDay.SetMainView(_mainView);
                     break;
                 case 16:
                     ReturnDay = new Day16(_input);
