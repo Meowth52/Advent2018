@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RoyT.AStar;
 
 namespace Advent2018
 {
@@ -67,6 +68,10 @@ namespace Advent2018
                 return this.y.CompareTo(other.y);
             }
             return this.x.CompareTo(other.x);
+        }
+        public Position GetPosition()
+        {
+            return new Position(x, y);
         }
     }
     class CoordinateEqualityComparer : IEqualityComparer<Coordinate>
