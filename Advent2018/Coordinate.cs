@@ -73,6 +73,11 @@ namespace Advent2018
         {
             return new Position(x, y);
         }
+        public void Assimilate(Coordinate c)
+        {
+            x = c.x;
+            y = c.y;
+        }
     }
     class CoordinateEqualityComparer : IEqualityComparer<Coordinate>
     {
