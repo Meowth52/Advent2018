@@ -14,9 +14,15 @@ namespace Advent2018
         string[,] Map;
         Dictionary<string, Fighter>[] Fighters;
         Grid grid;
+        bool FullWin;
         public Day15(string _input) : base(_input)
         {
             Instructions = this.parseStringArray(_input);
+            MakeTheStuff(Instructions, 3);
+        }
+        public void MakeTheStuff(string[] _instructions, int Strongness)
+        {
+            Instructions = _instructions;
             Map = new string[Instructions.Length, Instructions[0].Length];
             int x = 0;
             int y = 0;
@@ -45,7 +51,7 @@ namespace Advent2018
                         if (Map[x, y] == "E")
                         {
                             Map[x, y] = Map[x, y] + DictionaryIndex.ToString();
-                            Fighters[0].Add(Map[x, y], new Fighter(3, 200, x, y));
+                            Fighters[0].Add(Map[x, y], new Fighter(Strongness, 200, x, y));
                         }
                         else if (Map[x, y] == "G")
                         {
@@ -56,18 +62,15 @@ namespace Advent2018
                     DictionaryIndex++;
                 }
             }
+            FullWin = false;
         }
         public override Tuple<string, string> getResult()
         {
-            int Sum = 0;
-            int Sum2 = 0;
-            string Returnstring = "";
-            foreach (string s in Map)
-                Returnstring += s;
-            return Tuple.Create(getPartOne(), Sum2.ToString());
+            return Tuple.Create(getPartOne(), getPartTwo());
         }
         public override string getPartOne()
         {
+            int StartingElves = Fighters[0].Count;
             string Test = "";
             int Rounds = 0;
             while (Fighters[0].Count > 0 && Fighters[1].Count > 0)
@@ -136,10 +139,20 @@ namespace Advent2018
             {
                 RemainingHp += winner.Value.Hp;
             }
+            FullWin = StartingElves == Fighters[0].Count();
             return (Rounds * RemainingHp).ToString();
         }
         public override string getPartTwo()
         {
+            int i = 4;
+            while (true)
+            {
+                MakeTheStuff(Instructions, i);
+                string IsThisIt = getPartOne();
+                if (FullWin)
+                    return IsThisIt;
+                i++;
+            }
             throw new NotImplementedException();
         }
         public void Act(int FighterType, int x, int y)
