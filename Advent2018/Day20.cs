@@ -37,6 +37,7 @@ namespace Advent2018
                 bool Poppipop = false;
                 bool UselessBranch = false;
                 bool PushiPsush = false;
+                Coordinate NextPosition = new Coordinate(0,0);
                 foreach (Coordinate CurrentPosition in CurrentPositions)
                 {
                     //Coordinate NextPosition = new Coordinate(CurrentPosition);
@@ -76,6 +77,7 @@ namespace Advent2018
                             break;
                         case '(':
                             PushiPsush = true;
+                            NextPosition = new Coordinate(CurrentPosition);
                             break;
                         case ')':
                             Poppipop = true;
@@ -100,7 +102,7 @@ namespace Advent2018
                 if (PushiPsush)
                 {
                     NextPositions.Add(new List<Coordinate>());
-                    NestStack.Push(new Coordinate(CurrentPosition));
+                    NestStack.Push(new Coordinate(NextPosition));
                 }
                 if (Poppipop)
                 {
