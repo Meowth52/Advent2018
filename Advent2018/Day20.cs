@@ -28,10 +28,12 @@ namespace Advent2018
             Coordinate W = new Coordinate(0, -1);
             Coordinate N = new Coordinate(1, 0);
             Coordinate S = new Coordinate(-1, 0);
-            List<Coordinate> CurrentPositions = new List<Coordinate>();
+            HashSet<Coordinate> CurrentPositions = new HashSet<Coordinate>();
             List<List<Coordinate>> NextPositions = new List<List<Coordinate>>();
             CurrentPositions.Add(new Coordinate(Max / 2, Max / 2));
             char LastChar = ' ';
+            int Lenght = Input.Length;
+            int Progress = 0;
             foreach (char c in Input)
             {
                 bool Poppipop = false;
@@ -107,10 +109,19 @@ namespace Advent2018
                 if (Poppipop)
                 {
                     if (!UselessBranch)
-                        CurrentPositions.AddRange(new List<Coordinate>(NextPositions.Last()));
+                    {
+                        foreach (Coordinate coo in NextPositions.Last())
+                        {
+                            if(!CurrentPositions.Contains(coo))
+                                CurrentPositions.Add(coo);
+                        }
+                        //CurrentPositions.AddRange(new List<Coordinate>(NextPositions.Last()));
+
+                    }
                     NextPositions.Remove(NextPositions.Last());
                     NestStack.Pop();
                 }
+                Progress++;
             }
             StringBuilder OutString = new StringBuilder();
             for (int x = 0; x < Max; x++)
